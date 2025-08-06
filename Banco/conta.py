@@ -12,6 +12,10 @@ class Conta:
             self.saldo -= valor
             print("Saque realizado")
 
+    def depositar(self, valor: float):
+        self.saldo += valor
+        print("Deposito realizado")
+
     def mostrar(self):
         print(f'{self.titular} - Saldo: R${self.saldo:.2f}')
 
@@ -28,7 +32,7 @@ class Conta:
 nome = input("Seu nome completo: ")
 num = int(input("Número da sua conta: "))
 ag = int(input("Número da sua agência: "))
-saldo = 1000
+saldo = 0
 
 # Lista de contas
 contas = []
@@ -48,7 +52,8 @@ while True:
     print("1. Mostrar meu saldo")
     print("2. Sacar")
     print("3. Transferir")
-    print("4. Mostrar todos os saldos")
+    print("4. Depositar")
+    print("5. Mostrar todos os saldos")
     print("0. Sair")
 
     opcao = input("Escolha uma opção: ")
@@ -74,6 +79,9 @@ while True:
         else:
             print("Destinatário não encontrado.")
     elif opcao == "4":
+        valorDeposito = float(input("Valor para depositar: R$"))
+        c1.depositar(valorDeposito)
+    elif opcao == "5":
         print("\n--- SALDOS DAS CONTAS ---")
         for conta in contas:
             conta.mostrar()
