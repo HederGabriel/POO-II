@@ -23,30 +23,62 @@ class Conta:
             destino.saldo += valor
             print(f'Transferência de R${valor:.2f} para {destino.titular} realizada com sucesso.')
 
+
+# Criar contas
 nome = input("Seu nome completo: ")
 num = int(input("Número da sua conta: "))
 ag = int(input("Número da sua agência: "))
-saldo = 0
+saldo = 1000
 
+# Lista de contas
+contas = []
+
+# Conta principal do usuário
 c1 = Conta(num, ag, nome, saldo)
-c1.saldo = 1000
+contas.append(c1)
 
-c2 = Conta(4321, 8765, "Carlos Mendes", 0)
+# Outras contas fictícias
+c2 = Conta(4321, 8765, "Carlos Mendes", 500)
+c3 = Conta(9876, 1234, "Ana Lima", 800)
+contas.extend([c2, c3])
 
-print("")
-qnt = float(input("Valor do saque: "))
-c1.sacar(qnt)
-c1.mostrar()
+# Menu de opções
+while True:
+    print("\n----- MENU -----")
+    print("1. Mostrar meu saldo")
+    print("2. Sacar")
+    print("3. Transferir")
+    print("4. Mostrar todos os saldos")
+    print("0. Sair")
 
-print("")
-valor_transferencia = float(input("Digite o valor da transferência: "))
-dest_nome = input("Digite quem vai receber sua transferência: ")
+    opcao = input("Escolha uma opção: ")
 
-if dest_nome == c2.titular:
-    c1.transferir(valor_transferencia, c2)
-else:
-    print("Destinatário não encontrado.")
+    if opcao == "1":
+        c1.mostrar()
+    elif opcao == "2":
+        valor = float(input("Valor para sacar: R$"))
+        c1.sacar(valor)
+    elif opcao == "3":
+        valor = float(input("Valor para transferir: R$"))
+        destNome = input("Digite o nome do destinatário: ")
 
-print("\nSaldos Atualizados")
-c1.mostrar()
-c2.mostrar()
+        # Buscar destinatário pela lista de contas
+        destino = None
+        for conta in contas:
+            if conta.titular.lower() == destNome.lower() and conta != c1:
+                destino = conta
+                break
+
+        if destino:
+            c1.transferir(valor, destino)
+        else:
+            print("Destinatário não encontrado.")
+    elif opcao == "4":
+        print("\n--- SALDOS DAS CONTAS ---")
+        for conta in contas:
+            conta.mostrar()
+    elif opcao == "0":
+        print("Encerrando o programa...")
+        break
+    else:
+        print("Opção inválida. Tente novamente.")
