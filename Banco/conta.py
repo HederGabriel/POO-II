@@ -19,7 +19,18 @@ class Conta:
     def mostrar(self):
         print(f'{self.titular} - Saldo: R${self.saldo:.2f}')
 
-    def transferir(self, valor: float, destino):
+    def transferir(self, valor: float, destNome: str, contas: list):
+        # Buscar destino dentro do método
+        destino = None
+        for conta in contas:
+            if conta.titular.lower() == destNome.lower() and conta != self:
+                destino = conta
+                break
+
+        if not destino:
+            print("Destinatário não encontrado.")
+            return
+
         if valor > self.saldo:
             print("Saldo insuficiente para transferir")
         else:
@@ -53,7 +64,6 @@ while True:
     print("2. Sacar")
     print("3. Transferir")
     print("4. Depositar")
-    print("5. Mostrar todos os saldos")
     print("0. Sair")
 
     opcao = input("Escolha uma opção: ")
@@ -66,25 +76,10 @@ while True:
     elif opcao == "3":
         valor = float(input("Valor para transferir: R$"))
         destNome = input("Digite o nome do destinatário: ")
-
-        # Buscar destinatário pela lista de contas
-        destino = None
-        for conta in contas:
-            if conta.titular.lower() == destNome.lower() and conta != c1:
-                destino = conta
-                break
-
-        if destino:
-            c1.transferir(valor, destino)
-        else:
-            print("Destinatário não encontrado.")
+        c1.transferir(valor, destNome, contas)
     elif opcao == "4":
         valorDeposito = float(input("Valor para depositar: R$"))
         c1.depositar(valorDeposito)
-    elif opcao == "5":
-        print("\n--- SALDOS DAS CONTAS ---")
-        for conta in contas:
-            conta.mostrar()
     elif opcao == "0":
         print("Encerrando o programa...")
         break
