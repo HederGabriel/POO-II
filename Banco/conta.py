@@ -5,59 +5,56 @@ class Conta:
         self.titular = titular
         self.saldo = saldo
 
-    def sacar(self, valor: float):
-        if valor > self.saldo:
-            print("Saldo insuficiente")
-        else:
-            self.saldo -= valor
-            print("Saque realizado")
+    def sacar(self, valor: float) -> bool:
+        if valor <= 0 or valor > self.saldo:
+            return False
+        self.saldo -= valor
+        return True
 
-    def depositar(self, valor: float):
+    def depositar(self, valor: float) -> bool:
+        if valor <= 0:
+            return False
         self.saldo += valor
-        print("Deposito realizado")
+        return True
 
-    def mostrar(self):
+    def mostrar(self) -> bool:
+        # Apenas exibe — sempre retorna True
         print(f'{self.titular} - Saldo: R${self.saldo:.2f}')
+        return True
 
-    def transferir(self, valor: float, destNome: str, contas: list):
-        # Buscar destino dentro do método
+    def transferir(self, valor: float, destNome: str, contas: list) -> bool:
+        # Localiza destino
         destino = None
         for conta in contas:
             if conta.titular.lower() == destNome.lower() and conta != self:
                 destino = conta
                 break
 
-        if not destino:
-            print("Destinatário não encontrado.")
-            return
+        if not destino or valor <= 0 or valor > self.saldo:
+            return False
 
-        if valor > self.saldo:
-            print("Saldo insuficiente para transferir")
-        else:
-            self.saldo -= valor
-            destino.saldo += valor
-            print(f'Transferência de R${valor:.2f} para {destino.titular} realizada com sucesso.')
+        self.saldo -= valor
+        destino.saldo += valor
+        return True
 
 
-# Criar contas
+# ====== FLUXO PRINCIPAL ======
+
+# Criar conta principal
 nome = input("Seu nome completo: ")
 num = int(input("Número da sua conta: "))
 ag = int(input("Número da sua agência: "))
 saldo = 0
 
-# Lista de contas
 contas = []
-
-# Conta principal do usuário
 c1 = Conta(num, ag, nome, saldo)
 contas.append(c1)
 
-# Outras contas fictícias
+# Contas fictícias
 c2 = Conta(4321, 8765, "Carlos Mendes", 500)
 c3 = Conta(9876, 1234, "Ana Lima", 800)
 contas.extend([c2, c3])
 
-# Menu de opções
 while True:
     print("\n----- MENU -----")
     print("1. Mostrar meu saldo")
@@ -70,18 +67,32 @@ while True:
 
     if opcao == "1":
         c1.mostrar()
+
     elif opcao == "2":
         valor = float(input("Valor para sacar: R$"))
-        c1.sacar(valor)
+        if c1.sacar(valor):
+            print("Saque realizado com sucesso.")
+        else:
+            print("Erro: saldo insuficiente ou valor inválido.")
+
     elif opcao == "3":
         valor = float(input("Valor para transferir: R$"))
         destNome = input("Digite o nome do destinatário: ")
-        c1.transferir(valor, destNome, contas)
+        if c1.transferir(valor, destNome, contas):
+            print("Transferência realizada com sucesso.")
+        else:
+            print("Erro: destinatário não encontrado, saldo insuficiente ou valor inválido.")
+
     elif opcao == "4":
         valorDeposito = float(input("Valor para depositar: R$"))
-        c1.depositar(valorDeposito)
+        if c1.depositar(valorDeposito):
+            print("Depósito realizado com sucesso.")
+        else:
+            print("Erro: valor de depósito inválido.")
+
     elif opcao == "0":
         print("Encerrando o programa...")
         break
+
     else:
         print("Opção inválida. Tente novamente.")
