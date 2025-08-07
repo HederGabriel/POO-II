@@ -28,17 +28,19 @@ class Conta:
                 destino = conta
                 break
 
-        if not destino or valor_transferencia <= 0 or valor_transferencia > self.saldo:
+        if not destino:
             return False
 
-        self.saldo -= valor_transferencia
-        destino.saldo += valor_transferencia
-        return True
+        # Usa métodos já existentes
+        if self.sacar(valor_transferencia):
+            destino.depositar(valor_transferencia)
+            return True
+        else:
+            return False
 
 
 # ====== FLUXO PRINCIPAL ======
 
-# Criar conta principal
 nome_usuario = input("Seu nome completo: ")
 numero_conta = int(input("Número da sua conta: "))
 agencia_conta = int(input("Número da sua agência: "))
@@ -48,7 +50,6 @@ contas_lista = []
 c1 = Conta(numero_conta, agencia_conta, nome_usuario, saldo_inicial_usuario)
 contas_lista.append(c1)
 
-# Contas fictícias
 c2 = Conta(4321, 8765, "Carlos Mendes", 500)
 c3 = Conta(9876, 1234, "Ana Lima", 800)
 contas_lista.extend([c2, c3])
