@@ -7,9 +7,6 @@ cliente2 = Cliente("Fulana","Silva","123.456.789-00","Rua Tal 3789")
 c1 = Conta(123,1234,cliente1,1000)
 c2 = Conta(321,1234,cliente2,1000)
 
-c1.saldo = 3000
-
-print(c1.saldo)
 
 '''
 print("Digite o valor para a opção correspondente: ")

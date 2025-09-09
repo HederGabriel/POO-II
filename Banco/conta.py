@@ -30,10 +30,19 @@ class Conta:
         else:
             return False
 
+    # exemplo de método get
+    @property
+    def titular(self):
+        return self.__titular
 
-
-
-
+    #exemplo de método set
+    @titular.setter
+    def titular(self, novo_titular: Cliente):
+        if novo_titular == None:
+            print("Titular Invalido")
+        else:
+            self.__titular = novo_titular
+            return None
 
 
 
