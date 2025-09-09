@@ -1,52 +1,58 @@
-from Cliente import Cliente
+from cliente import Cliente
 from conta import Conta
 
-nome = input("nome completo:")
-sobrenome = input("sobrenome:")
-cpf = input("cpf:")
-endereco = input("endereço:")
+cliente1 = Cliente("Paulo","Silva","123.654.879-10","Rua Sei Lá 200")
+cliente2 = Cliente("Fulana","Silva","123.456.789-00","Rua Tal 3789")
 
-cliente1 = Cliente(nome,sobrenome,cpf,endereco)
-cliente2 = Cliente("fulana","Silva","123.456.789-00","Rua tal 2345")
+c1 = Conta(123,1234,cliente1,1000)
+c2 = Conta(321,1234,cliente2,1000)
 
-num = int(input("número da conta:"))
-ag =  int(input("número da agencia:"))
-saldo = 500
+c1.saldo = 3000
 
-c1 =  Conta(num,ag,nome,saldo)
-c2 = Conta(3523,2141,"bill",3000)
+print(c1.saldo)
 
-while True:
-    print("\n--- Menu ---")
-    print("1 - Mostrar Saldo")
-    print("2 - Sacar")
-    print("3 - Depositar")
-    print("4 - Transferir")
-    print("0 - Sair")
+'''
+print("Digite o valor para a opção correspondente: ")
+print("0 - Sair")
+print("1 - Saque")
+print("2 - Transferência")
+print("3 - Depósito")
+print("4 - Ver extrato")
+opcao = int(input())
 
-    opcao = input("Escolha uma opção: ")
-
-    if opcao == "1":
-        c1.mostrar_saldo()
-
-    elif opcao == "2":
-        valor = float(input("Valor para saque: R$"))
-        if c1.sacar(valor):
-            print("Saque realizado com sucesso.")
+while 0 <= opcao <= 4:
+    if opcao == 0:
+        print("Operação finalizada")
+        break
+    elif opcao == 1:
+        valor = float(input("Valor do saque: "))
+        status = c1.sacar(valor)
+        if status == True:
+            print("Saque efetuado com sucesso!")
         else:
-            print("Saldo insuficiente.")
-
-    elif opcao == "3":
-        valor = float(input("Valor para depósito: R$"))
+            print("Não foi possível efetuar o saque...")
+    elif opcao == 2:
+        valor = float(input("Valor a ser transferido: "))
+        status = c1.transferir(valor, c2)
+        if status == True:
+            print("Transferência efetuada com sucesso!")
+        else:
+            print("Não foi possível realizar a transferência...")
+    elif opcao == 3:
+        valor = float(input("Valor do depósito: "))
         c1.depositar(valor)
+    elif opcao == 4:
+        print(c1.mostrar_saldo())
 
-    elif opcao == "4":
-        valor = float(input("Valor para transferência: R$"))
-        c1.transferir(valor, c2)
-
-    elif opcao == "0":
-        print("Encerrando o sistema. Até logo!")
+    print("Digite o valor para a opção correspondente: ")
+    print("0 - Sair")
+    print("1 - Saque")
+    print("2 - Transferência")
+    print("3 - Depósito")
+    print("4 - Ver extrato")
+    opcao = int(input())
+    if (opcao == 0):
+        print("Operação finalizada")
         break
 
-    else:
-        print("Opção inválida. T4ente novamente.")
+'''
