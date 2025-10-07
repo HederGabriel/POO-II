@@ -4,3 +4,6 @@ class Cliente:
         self.sobrenome = sobrenome
         self.cpf = cpf
         self.endereco = endereco
+
+    def __str__(self):
+        return f"{self.nome} {self.sobrenome} - CPF: {self.cpf}"
