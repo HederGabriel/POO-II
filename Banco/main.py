@@ -42,8 +42,8 @@ def main():
             else:
                 print("Opção inválida. Escolha um número entre 0 e 4.")
 
-        except ValueError as e:
-            mensagem = str(e)
+        except ValueError as erro:
+            mensagem = str(erro)
             if "invalid literal" in mensagem:
                 print("Por favor, digite apenas números nas opções e valores.")
             elif "Saldo insuficiente" in mensagem:
