@@ -57,22 +57,9 @@ class Desktop(Computador):
 
 
 if __name__ == "__main__":
-    notebook = Notebook(
-        cpu="Core i5",
-        ram="8GB",
-        tela="15 polegadas",
-        hd="1TB",
-        bateria="60W",
-        wifi="802.11ac"
-    )
+    notebook = Notebook(cpu="Core i5", ram="8GB", tela="15 polegadas", hd="1TB", bateria="60W", wifi="802.11ac")
 
-    desktop = Desktop(
-        cpu="Core i7",
-        ram="16GB",
-        tela="22 polegadas",
-        hd="500GB",
-        gpu="NVidia RTX 2080"
-    )
+    desktop = Desktop(cpu="Core i7", ram="16GB", tela="22 polegadas", hd="500GB", gpu="NVidia RTX 2080")
 
     print("\n--- Ligando o Notebook ---")
     notebook.ligar()
